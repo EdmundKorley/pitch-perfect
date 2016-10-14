@@ -21,10 +21,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        stopRecordingButton.isEnabled = false
     }
 
     @IBAction func recordAudio(_ sender: AnyObject) {
@@ -58,14 +57,25 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
+    
     @IBAction func stopRecording(_ sender: AnyObject) {
         recordingLabel.text = "Tap to Record"
         stopRecordingButton.isEnabled = false
         recordingButton.isEnabled = true
+        audioRecorder.stop()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        stopRecordingButton.isEnabled = false
-    }
-}
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "stopRecording") {
+            let playSoundsVC = segue.destination as! PlaySoundsViewController
+            let recordedAudioURL = sender as! NSURL
+            playSoundsVC.recordedAudioURL = recordedAudioURL
+        }
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+}
