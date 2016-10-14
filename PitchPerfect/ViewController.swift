@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func recordAudio(_ sender: AnyObject) {
-        recordingLabel.text = "Now recording!"
+        recordingLabel.text = "Now recording 🎙"
         stopRecordingButton.isEnabled = true
         recordingButton.isEnabled = false
     }
